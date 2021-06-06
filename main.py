@@ -1,16 +1,15 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+from telegram import Update
+from telegram.ext import Updater, CommandHandler, CallbackContext
+from settings import TELEGRAM_BOT_TOKEN
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+def hello(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text(f'Hello {update.effective_user.first_name}')
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+updater = Updater(TELEGRAM_BOT_TOKEN)
+
+updater.dispatcher.add_handler(CommandHandler('hello', hello))
+
+updater.start_polling()
+updater.idle()
